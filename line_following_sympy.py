@@ -75,8 +75,8 @@ y_m = g(X)
 
 # (a, b) is the vector field we want to follow
 #TODO
-a = y_t
-b = -(0.01*x_t**2 - 1)*y_t - x_t
+a = y
+b = -(0.01*x**2 - 1)*y - x
 # So b_x is the desired angle
 b_x = atan2(b, a)
 
@@ -101,7 +101,7 @@ dt = 0.05
 T = 15
 
 # We create the function that gives the state at t+dt
-euler = lambdify((x, y, theta, theta_t, x_t, yt, u), X+dt*f(X,u))
+euler = lambdify((x, y, theta, theta_t, x_t, y_t, u), X+dt*f(X,u))
 
 # init_figure
 xmin, xmax, ymin, ymax = -15, 15, -15, 15
@@ -124,7 +124,6 @@ for t in np.arange(0,T,dt):
     draw_tank([state[4],state[5],state[3]],'red',0.25)
 
     # state evolution
-    print("test1")
     command = control(state)
     state = euler(*state, command) # Euler integration
     state = [float(v) for v in state.flatten()]

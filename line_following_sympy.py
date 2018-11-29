@@ -22,7 +22,7 @@ def draw_field(xmin,xmax,ymin,ymax):
     Mx    = np.arange(xmin,xmax,1)
     My    = np.arange(ymin,ymax,1)
     X1,X2 = np.meshgrid(Mx,My)
-    a ,b = 1,-X2
+    a ,b = 1,np.cos(X1)+np.sin(X1)-X2
     VX    = a #TODO
     VY    = b #TODO
     R = np.sqrt(VX**2+VY**2)
@@ -74,7 +74,7 @@ y_m = g(X)
 
 # (a, b) is the vector field we want to follow
 #TODO
-a ,b = 1,-y
+a ,b = 1,cos(x)+sin(x)-y
 # So b_x is the desired angle
 b_x = atan2(b, a)
 
@@ -117,7 +117,7 @@ for t in np.arange(0,T,dt):
     ax.set_xlim(ax.xmin,ax.xmax)
     ax.set_ylim(ax.ymin,ax.ymax)
     draw_field(xmin,xmax,ymin,ymax)
-    #draw_target(-xmin,xmax)
+    draw_target(-xmin,xmax)
     draw_tank(state,'darkblue',0.3)
 
     # state evolution

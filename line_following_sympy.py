@@ -9,7 +9,7 @@ def f(X,u):
     """Evolution function : return xdot = f(X,u)"""
     x, y, theta, theta_t, x_t, y_t = X
     Lt = 1.5
-    return Matrix([cos(theta), sin(theta), 1*u, Lt*sin(theta-theta_t),cos(theta),sin(theta)]) #TODO
+    return Matrix([cos(theta), sin(theta), 1*u, (1/Lt)*sin(theta-theta_t),cos(theta),sin(theta)]) #TODO
 
                   
 def g(X):

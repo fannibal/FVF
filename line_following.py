@@ -7,7 +7,7 @@ def f(x, u):
     theta = (x.flatten())[2]
     xdot = np.array([[cos(theta)], [sin(theta)], [1*u]]) #TODO
     return xdot
-
+    
 def draw_field(xmin,xmax,ymin,ymax):
     """Draw a (VX, VY) vector field between xmin, xmax and ymin, ymax."""
     Mx    = arange(xmin,xmax,1)
@@ -34,10 +34,9 @@ def control(x):
     a ,b = 1,-xf[1]
     psi = arctan2(b,a)
     theta = xf[2]
-    theta = arctan2(sin(theta),cos(theta))
-    e = sawtooth(psi-theta)
-    u = 1*e
-    return u
+    psi_p = -sin(theta)/(1+a**2+b**2)
+    u = psi_p + psi - theta
+    return sawtooth(u)
 
 
 # Initial state

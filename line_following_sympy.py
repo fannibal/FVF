@@ -9,21 +9,20 @@ def f(X,u):
     """Evolution function : return xdot = f(X,u)"""
     x, y, theta, theta_t, x_t, y_t = X
     Lt = 1.5
-    return Matrix([cos(theta), sin(theta), 1*u, (1/Lt)*sin(theta-theta_t),cos(theta),sin(theta)]) #TODO
+    return Matrix([cos(theta), sin(theta), 1*u, (1/Lt)*sin(theta-theta_t),0,0]) #TODO
 
                   
 def g(X):
     """Observation function : return y = g(X)"""
     x, y, theta, theta_t, x_t, y_t = X
-    return theta_t #TODO
+    return theta #TODO
 
 def draw_field(xmin,xmax,ymin,ymax):
     """Draw a (VX, VY) vector field between xmin, xmax and ymin, ymax."""
     Mx    = np.arange(xmin,xmax,1)
     My    = np.arange(ymin,ymax,1)
     X1,X2 = np.meshgrid(Mx,My)
-    a = X2
-    b = -(0.01*X1**2 - 1)*X2 - X1
+    a ,b = 1,-X2
     VX    = a #TODO
     VY    = b #TODO
     R = np.sqrt(VX**2+VY**2)
@@ -57,7 +56,7 @@ def control(X):
     derr = f_de(*X)
     d2err = f_d2e(*X)
     #TODO
-    diff_eq = err + 2*derr + d2err #TODO
+    diff_eq = err + 2*derr#TODO
     command = solve(diff_eq, u)[0] # We solve the differential equation in order to find u, the command.
     return command
 
@@ -75,8 +74,7 @@ y_m = g(X)
 
 # (a, b) is the vector field we want to follow
 #TODO
-a = y
-b = -(0.01*x**2 - 1)*y - x
+a ,b = 1,-y
 # So b_x is the desired angle
 b_x = atan2(b, a)
 
@@ -121,7 +119,6 @@ for t in np.arange(0,T,dt):
     draw_field(xmin,xmax,ymin,ymax)
     #draw_target(-xmin,xmax)
     draw_tank(state,'darkblue',0.3)
-    draw_tank([state[4],state[5],state[3]],'red',0.25)
 
     # state evolution
     command = control(state)
